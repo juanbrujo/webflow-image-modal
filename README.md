@@ -213,7 +213,7 @@ This solution dynamically creates the modal structure, so you **don't need to mo
 
 ## 📖 Example
 
-Check out the [live example](example.html) to see the modal in action with placeholder images.
+Check out the [live example](https://juanbrujo.github.io/webflow-image-modal/) to see the modal in action with placeholder images.
 
 ---
 
