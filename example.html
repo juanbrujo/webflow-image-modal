@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* dont't edit */
+    .grid-4-columns {
+      display: grid;
+      max-width: 640px;
+      margin: 60px auto;
+      grid-column-gap: 28px;
+      grid-row-gap: 28px;
+      grid-template-rows: auto;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      grid-auto-columns: 1fr;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 24px;
+    }
+    /* continue edit */
+    /* Modal (simple & elegant) */
+    /* Gallery images cursor hint */
+    .grid-4-columns img {
+      cursor: zoom-in;
+    }
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      display: none; /* hidden by default */
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: saturate(130%) blur(2px);
+      z-index: 9999;
+      padding: 24px; /* space for small screens */
+      cursor: zoom-out; /* hint that click closes */
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-content {
+      position: relative;
+      display: inline-block; /* shrink-wrap to image */
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+      overflow: visible; /* allow close button to sit at the side */
+    }
+
+    .modal-img {
+      width: auto;           /* hug intrinsic width */
+      height: auto;
+      max-width: 70vw;       /* responsive cap on desktop */
+      max-height: 90vh;      /* avoid exceeding viewport height */
+      display: block;
+      background: transparent; /* no extra background around the image */
+    }
+
+    /* Close button */
+    .modal-close {
+      position: absolute;
+      top: 0;
+      right: -20px;
+      transform: translateY(-50%);
+      appearance: none;
+      border: none;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 16px;
+      line-height: 1;
+      background: rgba(255, 255, 255, 0.9);
+      color: #111;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.1s ease;
+    }
+
+    /* Mobile: image uses 90% of viewport width */
+    @media (max-width: 767px) {
+      .modal-img {
+        max-width: 90vw;     /* responsive cap on mobile */
+      }
+      .modal-close {
+        top: 8px;
+        right: 8px; /* keep inside on small screens */
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="webflow-gallery">
+    <div class="grid-4-columns w-dyn-items">
+      <div role="listitem" class="gallery-image w-dyn-item w-dyn-repeater-item">
+        <img loading="lazy" src="https://picsum.photos/600/400?random=1" alt="Placeholder 1" />
+      </div>
+
+      <div role="listitem" class="gallery-image w-dyn-item w-dyn-repeater-item">
+        <img loading="lazy" src="https://picsum.photos/600/400?random=2" alt="Placeholder 2" />
+      </div>
+
+      <div role="listitem" class="gallery-image w-dyn-item w-dyn-repeater-item">
+        <img loading="lazy" src="https://picsum.photos/600/400?random=3" alt="Placeholder 3" />
+      </div>
+
+      <div role="listitem" class="gallery-image w-dyn-item w-dyn-repeater-item">
+        <img loading="lazy" src="https://picsum.photos/600/400?random=4" alt="Placeholder 4" />
+      </div>
+
+      <div role="listitem" class="gallery-image w-dyn-item w-dyn-repeater-item">
+        <img loading="lazy" src="https://picsum.photos/600/400?random=5" alt="Placeholder 5" />
+      </div>
+
+      <div role="listitem" class="gallery-image w-dyn-item w-dyn-repeater-item">
+        <img loading="lazy" src="https://picsum.photos/600/400?random=6" alt="Placeholder 6" />
+      </div>
+
+      <div role="listitem" class="gallery-image w-dyn-item w-dyn-repeater-item">
+        <img loading="lazy" src="https://picsum.photos/600/400?random=7" alt="Placeholder 7" />
+      </div>
+
+      <div role="listitem" class="gallery-image w-dyn-item w-dyn-repeater-item">
+        <img loading="lazy" src="https://picsum.photos/600/400?random=8" alt="Placeholder 8" />
+      </div>
+
+      <div role="listitem" class="gallery-image w-dyn-item w-dyn-repeater-item">
+        <img loading="lazy" src="https://picsum.photos/600/400?random=9" alt="Placeholder 9" />
+      </div>
+
+      <div role="listitem" class="gallery-image w-dyn-item w-dyn-repeater-item">
+        <img loading="lazy" src="https://picsum.photos/600/400?random=10" alt="Placeholder 10" />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // Create modal markup dynamically to avoid modifying Webflow HTML
+      const modalHTML = `
+        <div id="modal-overlay" class="modal-overlay" inert>
+          <div class="modal-content" role="dialog" aria-modal="true" aria-label="Imagen ampliada">
+            <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+            <img class="modal-img" alt="" />
+          </div>
+        </div>
+      `;
+      document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+      // Get references after insertion
+      const overlay = document.getElementById('modal-overlay');
+      const modalImg = overlay.querySelector('.modal-img');
+      const btnClose = overlay.querySelector('.modal-close');
+      const gallery = document.querySelector('.webflow-gallery');
+
+      let lastFocused = null;
+
+      function openModal(fromImg) {
+        // Copy essential attributes to preserve quality and alt text
+        modalImg.src = fromImg.currentSrc || fromImg.src;
+        if (fromImg.srcset) modalImg.srcset = fromImg.srcset; else modalImg.removeAttribute('srcset');
+        if (fromImg.sizes) modalImg.sizes = fromImg.sizes; else modalImg.removeAttribute('sizes');
+        modalImg.alt = fromImg.alt || '';
+
+        lastFocused = document.activeElement;
+
+        overlay.classList.add('open');
+        overlay.removeAttribute('inert');
+        document.body.style.overflow = 'hidden';
+        // Move focus to close for accessibility
+        btnClose.focus({ preventScroll: true });
+      }
+
+      function closeModal() {
+        overlay.classList.remove('open');
+        overlay.setAttribute('inert', '');
+        document.body.style.overflow = '';
+        // Restore focus
+        if (lastFocused && typeof lastFocused.focus === 'function') {
+          lastFocused.focus({ preventScroll: true });
+        }
+      }
+
+      // Open on image click (delegate within the gallery)
+      const gallerySelector = document.querySelector('.grid-4-columns.w-dyn-items') || document.querySelector('.grid-4-columns');
+      if (gallerySelector) {
+        gallerySelector.addEventListener('click', function (e) {
+          const target = e.target;
+          if (target && target.tagName === 'IMG') {
+            openModal(target);
+          }
+        });
+      }
+
+      // Close when clicking outside the image (on overlay area)
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) {
+          closeModal();
+        }
+      });
+
+      // Close button
+      btnClose.addEventListener('click', closeModal);
+
+      // Escape key closes
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) {
+          closeModal();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
