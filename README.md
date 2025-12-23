@@ -20,7 +20,23 @@
 
 ---
 
+## 🖼️ Need to build a gallery first?
+
+<div align="center">
+
+**📚 Learn how to create a fast image gallery in Webflow**
+
+Use Webflow's **Multi-image field** to build your gallery, then implement this project to open images in large format with an elegant modal.
+
+[![View Webflow Guide](https://img.shields.io/badge/View_Webflow_Guide-4353FF?style=for-the-badge&logo=webflow&logoColor=white)](https://help.webflow.com/hc/en-us/articles/33961308586899-Multi-image-field-overview)
+
+</div>
+
+---
+
 ## 🚀 Quick Start
+
+> 👉 **Want to see it in action first?** Check out the [live demo](https://juanbrujo.github.io/webflow-image-modal/) before implementing.
 
 ### 1. Add Gallery Wrapper Class
 
@@ -215,7 +231,7 @@ This solution dynamically creates the modal structure, so you **don't need to mo
 
 ## 📖 Example
 
-Check out the [live example](https://juanbrujo.github.io/webflow-image-modal/) to see the modal in action with placeholder images.
+Check out the [live example](https://juanbrujo.github.io/webflow-image-modal/#example) to see the modal in action with placeholder images.
 
 ---
 

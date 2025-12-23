@@ -49,6 +49,10 @@
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
       background: linear-gradient(135deg, #0f172a 0%, #1a202c 100%);
@@ -77,6 +81,10 @@
       align-items: center;
     }
 
+    .header-content nav {
+      display: flex;
+    }
+
     .logo {
       font-size: 20px;
       font-weight: 700;
@@ -92,10 +100,24 @@
       font-size: 14px;
       margin-left: 32px;
       transition: color 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    nav a svg {
+      width: 16px;
+      height: 16px;
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
     }
 
     nav a:hover {
       color: #60a5fa;
+    }
+
+    nav a:hover svg {
+      opacity: 1;
     }
 
     /* Hero Section */
@@ -343,6 +365,109 @@
     .token.attr-name { color: #f472b6; }
     .token.attr-value { color: #fbbf24; }
 
+    /* Gallery Info Callout */
+    .gallery-info-callout {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.15));
+      border: 2px solid rgba(96, 165, 250, 0.4);
+      border-radius: 16px;
+      padding: 48px;
+      margin: 80px auto;
+      max-width: 900px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      box-shadow: 0 20px 50px rgba(59, 130, 246, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .gallery-info-callout:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 60px rgba(59, 130, 246, 0.3);
+      border-color: rgba(96, 165, 250, 0.6);
+    }
+
+    .gallery-info-icon {
+      flex-shrink: 0;
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+    }
+
+    .gallery-info-icon svg {
+      width: 44px;
+      height: 44px;
+    }
+
+    .gallery-info-content h3 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .gallery-info-content p {
+      font-size: 16px;
+      color: #cbd5e1;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .gallery-info-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .gallery-info-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+    }
+
+    .gallery-info-link svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .gallery-info-callout {
+        flex-direction: column;
+        padding: 32px 24px;
+        text-align: center;
+      }
+
+      .gallery-info-icon {
+        width: 64px;
+        height: 64px;
+      }
+
+      .gallery-info-icon svg {
+        width: 36px;
+        height: 36px;
+      }
+
+      .gallery-info-content h3 {
+        font-size: 20px;
+      }
+
+      .gallery-info-content p {
+        font-size: 14px;
+      }
+    }
+
     .install-steps {
       list-style: none;
       margin-top: 24px;
@@ -418,7 +543,7 @@
       color: #10b981;
       padding: 6px 14px;
       border-radius: 20px;
-      font-size: 12px;
+      font-size: 16px;
       font-weight: 600;
       margin-bottom: 24px;
       border: 1px solid rgba(16, 185, 129, 0.3);
@@ -570,10 +695,15 @@
       <div class="logo">◈ Webflow Image Modal</div>
       <nav>
         <a href="#features">Features</a>
-        <a href="#example">Example</a>
+        <a href="#example">Live Example</a>
         <a href="#how-it-works">How It Works</a>
         <a href="#install">Installation</a>
-        <a href="https://github.com/juanbrujo/webflow-image-modal" target="_blank">GitHub</a>
+        <a href="https://github.com/juanbrujo/webflow-image-modal" target="_blank">
+          <svg viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+          GitHub
+        </a>
       </nav>
     </div>
   </header>
@@ -587,14 +717,14 @@
       Copy-paste solution that works out-of-the-box on any Webflow site.
     </p>
     <div class="cta-buttons">
-      <a href="https://github.com/juanbrujo/webflow-image-modal" class="btn btn-primary">Get Started on GitHub</a>
+      <a href="#example" class="btn btn-primary">View Live Example</a>
       <a href="#install" class="btn btn-secondary">View Installation Guide</a>
     </div>
   </section>
 
   <!-- Features Section -->
   <section class="section" id="features">
-    <h2 class="section-title">Why Choose This Solution?</h2>
+    <h2 class="section-title">Why Webflow Image Modal ?</h2>
     <div class="features-grid">
       <div class="feature-card">
         <div class="feature-icon">🎯</div>
@@ -632,7 +762,7 @@
   <!-- Example Section -->
   <section class="section" id="example">
     <div class="container">
-      <h2 class="section-title">Example</h2>
+      <h2 class="section-title">Live Example</h2>
       <div class="webflow-gallery">
         <div class="grid-4-columns w-dyn-items">
           <div role="listitem" class="gallery-image w-dyn-item w-dyn-repeater-item">
@@ -677,6 +807,33 @@
         </div>
       </div>
       <p style="text-align:center; color:#94a3b8; margin-top:16px;">Click the image to preview the modal interaction.</p>
+    </div>
+  </section>
+
+  <!-- Gallery Setup Callout -->
+  <section class="section">
+    <div class="container">
+      <div class="gallery-info-callout">
+        <div class="gallery-info-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7"/>
+            <rect x="14" y="3" width="7" height="7"/>
+            <rect x="14" y="14" width="7" height="7"/>
+            <rect x="3" y="14" width="7" height="7"/>
+          </svg>
+        </div>
+        <div class="gallery-info-content">
+          <h3>Need to build a gallery in Webflow?</h3>
+          <p>Learn how to create a fast image gallery in Webflow using the Multi-image field, then use this project to open images in large format.</p>
+          <a href="https://help.webflow.com/hc/en-us/articles/33961308586899-Multi-image-field-overview" target="_blank" rel="noopener noreferrer" class="gallery-info-link">
+            View Webflow Guide
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"/>
+              <polyline points="7 7 17 7 17 17"/>
+            </svg>
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 
