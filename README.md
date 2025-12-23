@@ -2,6 +2,8 @@
 
 > 🎉 **Free & Open Source** - Beautiful, responsive image zoom modal for Webflow galleries. Zero dependencies, pure vanilla JavaScript. Copy-paste solution that works out-of-the-box.
 
+![Webflow Image Modal](https://i.imgur.com/UE31GvE.jpeg)
+
 [![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![GitHub Stars](https://img.shields.io/github/stars/juanbrujo/webflow-image-modal?style=social)](https://github.com/juanbrujo/webflow-image-modal)
 
