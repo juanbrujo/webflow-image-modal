@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webflow Image Modal - Free, Open Source Gallery Solution for Webflow</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1a202c 100%);
+      color: #e2e8f0;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Header & Navigation */
+    header {
+      padding: 24px 0;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+      position: sticky;
+      top: 0;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    nav a {
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 14px;
+      margin-left: 32px;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #60a5fa;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 120px 24px;
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 6vw, 64px);
+      font-weight: 800;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #ffffff, #cbd5e1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(16px, 2vw, 20px);
+      color: #94a3b8;
+      margin-bottom: 48px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 80px;
+    }
+
+    .btn {
+      padding: 14px 32px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: #fff;
+      box-shadow: 0 10px 24px rgba(59, 130, 246, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 32px rgba(59, 130, 246, 0.4);
+    }
+
+    .btn-secondary {
+      background: rgba(148, 163, 184, 0.1);
+      color: #60a5fa;
+      border: 1px solid rgba(96, 165, 250, 0.3);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(96, 165, 250, 0.1);
+      border-color: #60a5fa;
+    }
+
+    /* Features Section */
+    .section {
+      padding: 100px 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 60px;
+      color: #fff;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+    }
+
+    .feature-card {
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      padding: 40px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      background: rgba(30, 41, 59, 0.8);
+      border-color: rgba(96, 165, 250, 0.3);
+      transform: translateY(-4px);
+    }
+
+    .feature-icon {
+      font-size: 40px;
+      margin-bottom: 16px;
+    }
+
+    .feature-card h3 {
+      font-size: 20px;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+
+    .feature-card p {
+      color: #94a3b8;
+      font-size: 14px;
+    }
+
+    /* How it Works */
+    .how-it-works {
+      background: rgba(30, 41, 59, 0.4);
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      border-radius: 12px;
+      padding: 60px 40px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    .step {
+      position: relative;
+      padding-left: 50px;
+    }
+
+    .step-number {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .step h4 {
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+
+    .step p {
+      font-size: 14px;
+      color: #94a3b8;
+    }
+
+    /* Installation Section */
+    .installation {
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      border-radius: 12px;
+      padding: 40px;
+      margin-top: 60px;
+    }
+
+    .installation h3 {
+      font-size: 24px;
+      margin-bottom: 24px;
+      color: #fff;
+    }
+
+    .code-block {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      border-radius: 8px;
+      padding: 20px;
+      overflow-x: auto;
+      margin-bottom: 20px;
+    }
+
+    .code-block code {
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 13px;
+      color: #60a5fa;
+      line-height: 1.8;
+    }
+
+    .install-steps {
+      list-style: none;
+      margin-top: 24px;
+    }
+
+    .install-steps li {
+      padding: 12px 0;
+      padding-left: 32px;
+      position: relative;
+      color: #cbd5e1;
+      font-size: 14px;
+    }
+
+    .install-steps li:before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #10b981;
+      font-weight: bold;
+    }
+
+    .grid-4-columns {
+      display: grid;
+      margin: 60px auto;
+      grid-column-gap: 28px;
+      grid-row-gap: 28px;
+      grid-template-rows: auto;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      grid-auto-columns: 1fr;
+    }
+
+    .grid-4-columns img {
+      max-width: 100%;
+      border-radius: 24px;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid rgba(148, 163, 184, 0.1);
+      padding: 60px 24px;
+      text-align: center;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      margin-bottom: 24px;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .social-links a {
+      color: #64748b;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: #60a5fa;
+    }
+
+    /* Badge */
+    .badge {
+      display: inline-block;
+      background: rgba(16, 185, 129, 0.1);
+      color: #10b981;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      nav {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      nav a {
+        margin-left: 0;
+      }
+
+      .hero {
+        padding: 80px 24px;
+      }
+
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn {
+        width: 100%;
+        max-width: 300px;
+      }
+
+      .section {
+        padding: 60px 24px;
+      }
+
+      .how-it-works {
+        padding: 40px 24px;
+      }
+
+      .installation {
+        padding: 24px;
+      }
+
+      .code-block {
+        overflow-x: auto;
+      }
+
+      .code-block code {
+        font-size: 12px;
+      }
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Webflow Image Modal */
+    /* Free, Open Source Gallery Solution for Webflow */
+    /* https://github.com/juanbrujo/webflow-image-modal */
+
+    .webflow-gallery img {
+      cursor: zoom-in;
+    }
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: saturate(130%) blur(2px);
+      z-index: 9999;
+      padding: 24px;
+      cursor: zoom-out;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-content {
+      position: relative;
+      display: inline-block;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+      overflow: visible;
+    }
+
+    .modal-img {
+      width: auto;
+      height: auto;
+      max-width: 70vw;
+      max-height: 90vh;
+      display: block;
+      background: transparent;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 0;
+      right: -20px;
+      transform: translateY(-50%);
+      appearance: none;
+      border: none;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 16px;
+      line-height: 1;
+      background: rgba(255, 255, 255, 0.9);
+      color: #111;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.1s ease;
+    }
+
+    @media (max-width: 767px) {
+      .modal-img {
+        max-width: 90vw;
+      }
+      .modal-close {
+        top: 8px;
+        right: 8px;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="logo">◈ Webflow Image Modal</div>
+      <nav>
+        <a href="#features">Features</a>
+        <a href="#example">Example</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#install">Installation</a>
+        <a href="https://github.com/juanbrujo/webflow-image-modal" target="_blank">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="badge">🎉 Free & Open Source</div>
+    <h1>Image Modal Gallery for Webflow</h1>
+    <p class="hero-subtitle">
+      Beautiful, responsive image zoom modal. Zero dependencies, pure vanilla JavaScript. 
+      Copy-paste solution that works out-of-the-box on any Webflow site.
+    </p>
+    <div class="cta-buttons">
+      <a href="https://github.com/juanbrujo/webflow-image-modal" class="btn btn-primary">Get Started on GitHub</a>
+      <a href="#install" class="btn btn-secondary">View Installation Guide</a>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="section" id="features">
+    <h2 class="section-title">Why Choose This Solution?</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>Dead Simple</h3>
+        <p>Copy CSS and JavaScript. No dependencies, no build steps. Works immediately on your Webflow site.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>Fully Responsive</h3>
+        <p>Adapts perfectly to all devices. 70vw on desktop, 90vw on mobile. Touch-friendly interactions.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">♿</div>
+        <h3>Accessible</h3>
+        <p>WCAG compliant with proper ARIA labels, keyboard navigation (Escape key), and focus management.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎨</div>
+        <h3>Elegant Design</h3>
+        <p>Modern dark overlay with backdrop blur effect. Minimalist close button. Premium feel.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Zero Performance Impact</h3>
+        <p>Vanilla JavaScript with no external libraries. Minimal CSS. Lightning-fast load times.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔓</div>
+        <h3>Open Source</h3>
+        <p>MIT License. Contribute, fork, and customize. Community-driven development.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Example Section -->
+  <section class="section" id="example">
+    <div class="container">
+      <h2 class="section-title">Example</h2>
+      <div class="webflow-gallery">
+        <div class="grid-4-columns w-dyn-items">
+          <div role="listitem" class="gallery-image w-dyn-item w-dyn-repeater-item">
+            <img loading="lazy" src="https://picsum.photos/600/400?random=1" alt="Placeholder 1" />
+          </div>
+
+          <div role="listitem" class="gallery-image w-dyn-item w-dyn-repeater-item">
+            <img loading="lazy" src="https://picsum.photos/600/400?random=2" alt="Placeholder 2" />
+          </div>
+
+          <div role="listitem" class="gallery-image w-dyn-item w-dyn-repeater-item">
+            <img loading="lazy" src="https://picsum.photos/600/400?random=3" alt="Placeholder 3" />
+          </div>
+
+          <div role="listitem" class="gallery-image w-dyn-item w-dyn-repeater-item">
+            <img loading="lazy" src="https://picsum.photos/600/400?random=4" alt="Placeholder 4" />
+          </div>
+
+          <div role="listitem" class="gallery-image w-dyn-item w-dyn-repeater-item">
+            <img loading="lazy" src="https://picsum.photos/600/400?random=5" alt="Placeholder 5" />
+          </div>
+
+          <div role="listitem" class="gallery-image w-dyn-item w-dyn-repeater-item">
+            <img loading="lazy" src="https://picsum.photos/600/400?random=6" alt="Placeholder 6" />
+          </div>
+
+          <div role="listitem" class="gallery-image w-dyn-item w-dyn-repeater-item">
+            <img loading="lazy" src="https://picsum.photos/600/400?random=7" alt="Placeholder 7" />
+          </div>
+
+          <div role="listitem" class="gallery-image w-dyn-item w-dyn-repeater-item">
+            <img loading="lazy" src="https://picsum.photos/600/400?random=8" alt="Placeholder 8" />
+          </div>
+
+          <div role="listitem" class="gallery-image w-dyn-item w-dyn-repeater-item">
+            <img loading="lazy" src="https://picsum.photos/600/400?random=9" alt="Placeholder 9" />
+          </div>
+
+          <div role="listitem" class="gallery-image w-dyn-item w-dyn-repeater-item">
+            <img loading="lazy" src="https://picsum.photos/600/400?random=10" alt="Placeholder 10" />
+          </div>
+        </div>
+      </div>
+      <p style="text-align:center; color:#94a3b8; margin-top:16px;">Click the image to preview the modal interaction.</p>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="section" id="how-it-works">
+    <div class="container">
+      <h2 class="section-title">How It Works</h2>
+      <div class="how-it-works">
+        <p style="color: #cbd5e1; margin-bottom: 40px;">
+          Our solution dynamically creates the modal structure, so you don't need to modify your Webflow HTML. 
+          Just add CSS styles and JavaScript code to your site's custom code sections.
+        </p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h4>Copy CSS Styles</h4>
+            <p>Add the modal styles to your Webflow site's custom head code.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h4>Add JavaScript</h4>
+            <p>Paste the vanilla JS that handles clicks, opens/closes modal, and manages focus.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h4>Click Images</h4>
+            <p>Click any image in your gallery and watch the elegant modal appear instantly.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <h4>Customize (Optional)</h4>
+            <p>Tweak colors, sizes, and animations to match your brand in seconds.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Installation Section -->
+  <section class="section" id="install">
+    <div lass="container">
+      <h2 class="section-title">Quick Start Guide</h2>
+      
+      <div class="installation">
+        <h3>1. Copy the CSS Styles</h3>
+        <p style="margin-bottom: 16px; color: #cbd5e1;">
+          Go to your Webflow site settings → Custom Code → Head Code and paste the entire &lt;style&gt; block from the example below:
+        </p>
+        <div class="code-block">
+          <pre>&lt;style&gt;
+  /* Webflow Image Modal */
+  /* Free, Open Source Gallery Solution for Webflow */
+  /* https://github.com/juanbrujo/webflow-image-modal */
+
+  .webflow-gallery img {
+    cursor: zoom-in;
+  }
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: saturate(130%) blur(2px);
+    z-index: 9999;
+    padding: 24px;
+    cursor: zoom-out;
+  }
+
+  .modal-overlay.open {
+    display: flex;
+  }
+
+  .modal-content {
+    position: relative;
+    display: inline-block;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+    overflow: visible;
+  }
+
+  .modal-img {
+    width: auto;
+    height: auto;
+    max-width: 70vw;
+    max-height: 90vh;
+    display: block;
+    background: transparent;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 0;
+    right: -20px;
+    transform: translateY(-50%);
+    appearance: none;
+    border: none;
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-size: 16px;
+    line-height: 1;
+    background: rgba(255, 255, 255, 0.9);
+    color: #111;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+  }
+
+  @media (max-width: 767px) {
+    .modal-img {
+      max-width: 90vw;
+    }
+    .modal-close {
+      top: 8px;
+      right: 8px;
+      transform: none;
+    }
+  }
+&lt;/style&gt;</pre>
+        </div>
+
+        <h3 style="margin-top: 40px;">2. Add the JavaScript</h3>
+        <p style="margin-bottom: 16px; color: #cbd5e1;">
+          Go to your Webflow site settings → Custom Code → Footer Code and paste this script:
+        </p>
+        <div class="code-block">
+          <pre>&lt;script&gt;
+  (function () {
+    // Create modal markup dynamically to avoid modifying Webflow HTML
+    const modalHTML = `
+      &lt;div id=&quot;modal-overlay&quot; class=&quot;modal-overlay&quot; inert&gt;
+        &lt;div class=&quot;modal-content&quot; role=&quot;dialog&quot; aria-modal=&quot;true&quot; aria-label=&quot;Imagen ampliada&quot;&gt;
+          &lt;button class=&quot;modal-close&quot; type=&quot;button&quot; aria-label=&quot;Cerrar&quot;&gt;✕&lt;/button&gt;
+          &lt;img class=&quot;modal-img&quot; alt=&quot;&quot; /&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+    // Get references after insertion
+    const overlay = document.getElementById('modal-overlay');
+    const modalImg = overlay.querySelector('.modal-img');
+    const btnClose = overlay.querySelector('.modal-close');
+    const gallery = document.querySelector('.webflow-gallery');
+
+    let lastFocused = null;
+
+    function openModal(fromImg) {
+      // Copy essential attributes to preserve quality and alt text
+      modalImg.src = fromImg.currentSrc || fromImg.src;
+      if (fromImg.srcset) modalImg.srcset = fromImg.srcset; else modalImg.removeAttribute('srcset');
+      if (fromImg.sizes) modalImg.sizes = fromImg.sizes; else modalImg.removeAttribute('sizes');
+      modalImg.alt = fromImg.alt || '';
+
+      lastFocused = document.activeElement;
+
+      overlay.classList.add('open');
+      overlay.removeAttribute('inert');
+      document.body.style.overflow = 'hidden';
+      // Move focus to close for accessibility
+      btnClose.focus({ preventScroll: true });
+    }
+
+    function closeModal() {
+      overlay.classList.remove('open');
+      overlay.setAttribute('inert', '');
+      document.body.style.overflow = '';
+      // Restore focus
+      if (lastFocused && typeof lastFocused.focus === 'function') {
+        lastFocused.focus({ preventScroll: true });
+      }
+    }
+
+    // Open on image click (delegate within the gallery)
+    const gallerySelector = document.querySelector('.grid-4-columns.w-dyn-items') || document.querySelector('.grid-4-columns');
+    if (gallerySelector) {
+      gallerySelector.addEventListener('click', function (e) {
+        const target = e.target;
+        if (target && target.tagName === 'IMG') {
+          openModal(target);
+        }
+      });
+    }
+
+    // Close when clicking outside the image (on overlay area)
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) {
+        closeModal();
+      }
+    });
+
+    // Close button
+    btnClose.addEventListener('click', closeModal);
+
+    // Escape key closes
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && overlay.classList.contains('open')) {
+        closeModal();
+      }
+    });
+  })();
+&lt;/script&gt;</pre>
+        </div>
+
+        <h3 style="margin-top: 40px;">That's It! 🎉</h3>
+        <ul class="install-steps">
+          <li>Publish your Webflow site</li>
+          <li>Click any image in your gallery</li>
+          <li>Watch the beautiful modal appear</li>
+          <li>Close with button, ESC key, or click outside</li>
+        </ul>
+
+        <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; padding: 20px; margin-top: 32px; color: #cbd5e1; font-size: 14px;">
+          <strong style="color: #60a5fa;">💡 Pro Tip:</strong> The JavaScript creates the modal structure dynamically, so you don't need to modify your Webflow HTML. This means it's safe to use on production sites without breaking existing content.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="social-links">
+        <a href="https://github.com/juanbrujo/webflow-image-modal" target="_blank">GitHub Repository</a>
+        <a href="https://github.com/juanbrujo/webflow-image-modal/issues" target="_blank">Report Issues</a>
+        <a href="https://github.com/juanbrujo/webflow-image-modal/blob/main/LICENSE" target="_blank">MIT License</a>
+      </div>
+      <p>
+        Free and open-source image modal solution for Webflow galleries.<br>
+        Made with ❤️ by <a href="https://github.com/juanbrujo" target="_blank" style="color: #60a5fa; text-decoration: none;">juanbrujo</a>
+      </p>
+    </div>
+    <p style="margin-top: 24px; color: #475569;">© 2025 Webflow Image Modal. All rights reserved.</p>
+  </footer>
+</body>
+</html>
